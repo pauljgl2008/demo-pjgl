@@ -10,5 +10,5 @@ COPY target/demo-pjgl-0.0.1-SNAPSHOT.jar /app/demo-pjgl.jar
 # Expone el puerto en el que tu aplicación Spring Boot está escuchando (el mismo que especificas en tu aplicación)
 EXPOSE 8080
 
-# Comando para ejecutar la aplicación Spring Boot al iniciar el contenedor
+#zzz Comando para ejecutar la aplicación Spring Boot al iniciar el contenedor
 CMD ["java", "-jar", "/app/demo-pjgl.jar"]
