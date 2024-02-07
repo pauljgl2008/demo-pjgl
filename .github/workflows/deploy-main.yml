@@ -72,13 +72,12 @@ jobs:
             echo "::set-output name=service-exists::false"
           fi
 
-
       # Crear el servicio si no existe
       - name: Create service if it does not exist
         if: steps.service-exists.outputs.service-exists == 'false'
         run: |
           echo "Creating service..."
-          aws ecs create-service --cluster demo-cluster-pjgl-v6 --service-name demo-pjgl-latest-service --task-definition paas/task-definition.json --desired-count 1 --launch-type EC2
+          aws ecs create-service --cluster demo-cluster-pjgl-v6 --service-name demo-pjgl-latest-service --task-definition demo-pjgl-family --desired-count 1 --launch-type EC2
           echo "Service created successfully."
 
       - name: Deploy Amazon ECS task definition
