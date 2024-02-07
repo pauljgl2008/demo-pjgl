@@ -43,12 +43,12 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
           REGISTRY_ALIAS: h1m8m7v8
-          REPOSITORY: demo-pjgl-repository
+          IMAGE_NAME: demo-image-usuarios
           IMAGE_TAG: latest
         run: |
-          docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG .
-          docker push $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG
-          echo "IMAGE_URL=$REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
+          docker build -t $REGISTRY/$REGISTRY_ALIAS/$IMAGE_NAME:$IMAGE_TAG .
+          docker push $REGISTRY/$REGISTRY_ALIAS/$IMAGE_NAME:$IMAGE_TAG
+          echo "IMAGE_URL=$REGISTRY/$REGISTRY_ALIAS/$IMAGE_NAME:$IMAGE_TAG" >> $GITHUB_ENV
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
