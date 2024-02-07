@@ -76,7 +76,7 @@ jobs:
 
       # Crear el servicio si no existe
       - name: Create service if it does not exist
-        if: env.service_exists == 'false'
+        if: env.service_exists == 'true'
         run: |
           echo "Creating service..."
           aws ecs create-service --cluster demo-cluster-pjgl-v6 --service-name demo-pjgl-latest-service --task-definition demo-pjgl-family --desired-count 1 --launch-type EC2
@@ -89,3 +89,15 @@ jobs:
           service: demo-pjgl-latest-service
           cluster: demo-cluster-pjgl-v6
           wait-for-service-stability: false
+
+      - name: Stop previous task
+        run: |
+          echo "Stopping previous task..."
+          task_arn=$(aws ecs list-tasks --cluster demo-cluster-pjgl-v6 --service-name demo-pjgl-latest-service --query 'taskArns[0]' --output text)
+          if [ -n "$task_arn" ]; then
+            aws ecs stop-task --cluster demo-cluster-pjgl-v6 --task $task_arn
+            echo "Previous task stopped."
+          else
+            echo "No previous task found."
+          fi
+        if: steps.service-exists.outputs.service-exists == 'true'
