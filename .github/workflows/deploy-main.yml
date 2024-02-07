@@ -68,10 +68,10 @@ jobs:
           service_exists=$(aws ecs describe-services --cluster $cluster_name --services $service_name --query 'services' --output text)
           if [ -z "$service_exists" ]; then
             echo "Service does not exist."
-            echo "service_exists=true" >> $GITHUB_SERVICE_EXISTS
+            echo "service_exists=true" >> GITHUB_ENV
           else
             echo "Service already exists."
-            echo "service_exists=false" >> $GITHUB_SERVICE_EXISTS
+            echo "service_exists=false" >> $GITHUB_ENV
           fi
 
       # Crear el servicio si no existe
