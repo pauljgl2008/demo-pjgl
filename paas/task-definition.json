@@ -3,10 +3,10 @@
     {
       "name": "demo-pjgl-container",
       "image": "public.ecr.aws/o4n6b6b1/demo-pjgl-image:SNAPSHOT",
-      "cpu": 0,
+      "cpu": 256,
+      "memory": 500,
       "portMappings": [
         {
-          "name": "demo-pjgl-8080-tcp",
           "containerPort": 5000,
           "hostPort": 5000,
           "protocol": "tcp"
@@ -20,19 +20,7 @@
   ],
   "family": "demo-pjgl-family",
   "volumes": [],
-  "status": "ACTIVE",
-  "requiresAttributes": [
-    {
-      "name": "com.amazonaws.ecs.capability.task-iam-role"
-    }
-  ],
   "placementConstraints": [],
-  "compatibilities": [
-    "EC2"
-  ],
-  "requiresCompatibilities": [
-    "EC2"
-  ],
   "cpu": "256",
   "memory": "500",
   "tags": []
