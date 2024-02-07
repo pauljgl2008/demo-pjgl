@@ -66,7 +66,7 @@ jobs:
           service_name="demo-pjgl-latest-service"
           if aws ecs describe-services --cluster demo-cluster-pjgl-v6 --services $service_name >/dev/null 2>&1; then
             echo "Service already exists."
-            echo "::set-output name=service-exists::true"
+            echo "::set-output name=service-exists::false"
           else
             echo "Service does not exist."
             echo "::set-output name=service-exists::false"
