@@ -64,14 +64,14 @@ jobs:
         run: |
           echo "Checking if service exists..."
           service_name="demo-pjgl-latest-service"
-          service_exists=$(aws ecs describe-services --cluster demo-cluster-pjgl-v6 --services $service_name --query 'services' --output text)
-          if [ -z "$service_exists" ]; then
-            echo "Service does not exist."
-            echo "::set-output name=service-exists::false"
-          else
+          if aws ecs describe-services --cluster demo-cluster-pjgl-v6 --services $service_name >/dev/null 2>&1; then
             echo "Service already exists."
             echo "::set-output name=service-exists::true"
+          else
+            echo "Service does not exist."
+            echo "::set-output name=service-exists::false"
           fi
+
 
       # Crear el servicio si no existe
       - name: Create service if it does not exist
