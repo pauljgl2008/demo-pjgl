@@ -58,6 +58,29 @@ jobs:
           container-name: demo-pjgl-container
           image: ${{ env.IMAGE_URL }}
 
+      # Verificar si el servicio existe
+      - name: Check if service exists
+        id: service-exists
+        run: |
+          echo "Checking if service exists..."
+          service_name="demo-pjgl-latest-service"
+          service_exists=$(aws ecs describe-services --cluster demo-cluster-pjgl-v6 --services $service_name --query 'services' --output text)
+          if [ -z "$service_exists" ]; then
+            echo "Service does not exist."
+            echo "::set-output name=service-exists::false"
+          else
+            echo "Service already exists."
+            echo "::set-output name=service-exists::true"
+          fi
+
+      # Crear el servicio si no existe
+      - name: Create service if it does not exist
+        if: steps.service-exists.outputs.service-exists == 'false'
+        run: |
+          echo "Creating service..."
+          aws ecs create-service --cluster demo-cluster-pjgl-v6 --service-name demo-pjgl-latest-service --task-definition paas/task-definition.json --desired-count 1 --launch-type EC2
+          echo "Service created successfully."
+
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
