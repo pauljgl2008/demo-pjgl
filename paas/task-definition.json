@@ -2,7 +2,7 @@
   "containerDefinitions": [
     {
       "name": "demo-pjgl-container",
-      "image": "public.ecr.aws/o4n6b6b1/demo-pjgl-image:SNAPSHOT",
+      "image": "public.ecr.aws/h1m8m7v8/demo-pjgl-image:SNAPSHOT",
       "cpu": 256,
       "memory": 500,
       "portMappings": [

@@ -63,5 +63,5 @@ jobs:
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: demo-pjgl-latest-service
-          cluster: demo-cluster-pjgl-v3
+          cluster: demo-cluster-pjgl-v4
           wait-for-service-stability: false
