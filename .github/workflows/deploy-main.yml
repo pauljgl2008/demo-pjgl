@@ -60,23 +60,23 @@ jobs:
 
       # Verificar si el servicio existe
       - name: Check if service exists
-        id: service-exists
+        id: service-not-exists
         run: |
           echo "Checking if service exists..."
           cluster_name="demo-cluster-pjgl-v6"
           service_name="demo-pjgl-latest-service"
-          service_exists=$(aws ecs describe-services --cluster $cluster_name --services $service_name --query 'services' --output text)
-          if [ -z "$service_exists" ]; then
+          service_not_exists=$(aws ecs describe-services --cluster $cluster_name --services $service_name --query 'services' --output text)
+          if [ -z "$service_not_exists" ]; then
             echo "Service does not exist."
-            echo "service_exists=true" >> GITHUB_ENV
+            echo "service_not_exists=true" >> GITHUB_ENV
           else
             echo "Service already exists."
-            echo "service_exists=false" >> $GITHUB_ENV
+            echo "service_not_exists=false" >> $GITHUB_ENV
           fi
 
       # Crear el servicio si no existe
       - name: Create service if it does not exist
-        if: env.service_exists == 'true'
+        if: env.service_not_exists == 'true'
         run: |
           echo "Creating service..."
           aws ecs create-service --cluster demo-cluster-pjgl-v6 --service-name demo-pjgl-latest-service --task-definition demo-pjgl-family --desired-count 1 --launch-type EC2
@@ -100,4 +100,3 @@ jobs:
           else
             echo "No previous task found."
           fi
-        if: steps.service-exists.outputs.service-exists == 'true'
