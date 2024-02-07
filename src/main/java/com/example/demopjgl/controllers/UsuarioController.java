@@ -12,7 +12,7 @@ public class UsuarioController {
 
     @GetMapping
     public String obtenerTodosLosUsuarios() {
-        return "Hola - microservicio usuarios v3";
+        return "Hola - microservicio usuarios v4";
     }
 }
 
