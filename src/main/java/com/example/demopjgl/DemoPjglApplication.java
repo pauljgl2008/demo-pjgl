@@ -8,7 +8,6 @@ public class DemoPjglApplication {
 
 	public static void main(String[] args) {
 
-		System.out.println("HolaMundo");
 		SpringApplication.run(DemoPjglApplication.class, args);
 	}
 
