@@ -68,15 +68,15 @@ jobs:
           service_exists=$(aws ecs describe-services --cluster $cluster_name --services $service_name --query 'services' --output text)
           if [ -z "$service_exists" ]; then
             echo "Service does not exist."
-            echo "::set-output name=service-exists::false"
+            echo "service_exists=true" >> $GITHUB_SERVICE_EXISTS
           else
             echo "Service already exists."
-            echo "::set-output name=service-exists::true"
+            echo "service_exists=false" >> $GITHUB_SERVICE_EXISTS
           fi
 
       # Crear el servicio si no existe
       - name: Create service if it does not exist
-        if: steps.service-exists.outputs.service-exists == 'false'
+        if: env.service_exists == 'false'
         run: |
           echo "Creating service..."
           aws ecs create-service --cluster demo-cluster-pjgl-v6 --service-name demo-pjgl-latest-service --task-definition demo-pjgl-family --desired-count 1 --launch-type EC2
