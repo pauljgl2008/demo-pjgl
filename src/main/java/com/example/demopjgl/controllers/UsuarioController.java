@@ -51,13 +51,13 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioEntity> crearUsuario(@RequestBody UsuarioEntity usuario) {
-        UsuarioEntity nuevoUsuario = usuarioService.guardarUsuario(usuario);
+    public ResponseEntity<UsuarioResponseDto> crearUsuario(@RequestBody UsuarioRequestDto usuarioRequestDto) {
+        UsuarioResponseDto nuevoUsuario = usuarioService.guardarUsuario(usuarioRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarUsuario(@PathVariable String id) throws Exception {
+    public ResponseEntity<Void> eliminarUsuario(@PathVariable String id) {
         usuarioService.eliminarUsuarioPorId(id);
         return ResponseEntity.noContent().build();
     }

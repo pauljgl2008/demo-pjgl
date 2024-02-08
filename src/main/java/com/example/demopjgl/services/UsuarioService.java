@@ -38,8 +38,9 @@ public class UsuarioService {
         return usuarioMapper.toUsuarioResponseDto(usuarioActualizado);
     }
 
-    public UsuarioEntity guardarUsuario(UsuarioEntity usuario) {
-        return usuarioRepository.save(usuario);
+    public UsuarioResponseDto guardarUsuario(UsuarioRequestDto usuario) {
+        UsuarioEntity usuarioCreado = usuarioRepository.save(this.usuarioMapper.fromUsuarioRequestDto(usuario));
+        return this.usuarioMapper.toUsuarioResponseDto(usuarioCreado);
     }
 
     public List<UsuarioEntity> guardarUsuarios(List<UsuarioEntity> usuarios) {
