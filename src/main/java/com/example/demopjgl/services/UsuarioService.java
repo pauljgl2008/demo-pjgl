@@ -1,7 +1,9 @@
 package com.example.demopjgl.services;
 
-import com.example.demopjgl.dtos.UsuarioRequestDto;
+import com.example.demopjgl.dtos.requests.UsuarioRequestDto;
+import com.example.demopjgl.dtos.responses.UsuarioResponseDto;
 import com.example.demopjgl.entities.UsuarioEntity;
+import com.example.demopjgl.mappers.UsuarioMapper;
 import com.example.demopjgl.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,27 +15,30 @@ import java.util.Optional;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioMapper usuarioMapper;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, UsuarioMapper usuarioMapper) {
         this.usuarioRepository = usuarioRepository;
+        this.usuarioMapper = usuarioMapper;
     }
 
-    public List<UsuarioEntity> obtenerTodosUsuarios() {
-        return usuarioRepository.findAll();
+    public List<UsuarioResponseDto> obtenerTodosUsuarios() {
+        return usuarioMapper.usuarioListToUsuarioResponseDtoList(usuarioRepository.findAll());
     }
 
     public Optional<UsuarioEntity> obtenerUsuarioPorId(String id) {
         return usuarioRepository.findById(id);
     }
 
-    public UsuarioEntity actualizarUsuario(UsuarioRequestDto usuarioRequestDto, String id) {
+    public UsuarioResponseDto actualizarUsuario(UsuarioRequestDto usuarioRequestDto, String id) {
         Optional<UsuarioEntity> usuarioExists = usuarioRepository.findById(id);
         if (usuarioExists.isPresent()){
-            usuarioExists.get().setNombre(usuarioRequestDto.getNombre());
-            usuarioExists.get().setEmail(usuarioRequestDto.getEmail());
+            usuarioExists.get().setNombre(usuarioRequestDto.getNombreUsuario());
+            usuarioExists.get().setEmail(usuarioRequestDto.getCorreoElectronico());
         }
-        return usuarioRepository.save(usuarioExists.get());
+        UsuarioResponseDto usuarioDto =  usuarioMapper.toUsuarioResponseDto(usuarioRepository.save(usuarioExists.get()));
+        return usuarioDto;
     }
 
     public UsuarioEntity guardarUsuario(UsuarioEntity usuario) {

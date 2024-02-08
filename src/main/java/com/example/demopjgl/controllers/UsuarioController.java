@@ -1,6 +1,7 @@
 package com.example.demopjgl.controllers;
 
-import com.example.demopjgl.dtos.UsuarioRequestDto;
+import com.example.demopjgl.dtos.requests.UsuarioRequestDto;
+import com.example.demopjgl.dtos.responses.UsuarioResponseDto;
 import com.example.demopjgl.entities.UsuarioEntity;
 import com.example.demopjgl.services.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +26,8 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UsuarioEntity>> obtenerTodosUsuarios() {
-        List<UsuarioEntity> usuarios = usuarioService.obtenerTodosUsuarios();
+    public ResponseEntity<List<UsuarioResponseDto>> obtenerTodosUsuarios() {
+        List<UsuarioResponseDto> usuarios = usuarioService.obtenerTodosUsuarios();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
@@ -38,8 +39,8 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioEntity> actualizarUsuario(@PathVariable String id, @RequestBody UsuarioRequestDto usuarioRequestDto) {
-        UsuarioEntity usuarioActualizado = usuarioService.actualizarUsuario(usuarioRequestDto, id);
+    public ResponseEntity<UsuarioResponseDto> actualizarUsuario(@PathVariable String id, @RequestBody UsuarioRequestDto usuarioRequestDto) {
+        UsuarioResponseDto usuarioActualizado = usuarioService.actualizarUsuario(usuarioRequestDto, id);
         if (usuarioActualizado != null) {
             return new ResponseEntity<>(usuarioActualizado, HttpStatus.OK);
         } else {
