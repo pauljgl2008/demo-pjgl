@@ -4,12 +4,15 @@ import com.example.demopjgl.dtos.requests.UsuarioRequestDto;
 import com.example.demopjgl.dtos.responses.UsuarioResponseDto;
 import com.example.demopjgl.entities.UsuarioEntity;
 import org.mapstruct.*;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UsuarioMapper {
+
+    UsuarioMapper INSTANCE = Mappers.getMapper( UsuarioMapper.class );
 
     @Mapping(source = "nombre", target = "nombreUsuario")
     @Mapping(source = "celular", target = "numeroCelular")
