@@ -28,35 +28,37 @@ public class UsuarioController {
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDto>> obtenerTodosUsuarios() {
         List<UsuarioResponseDto> usuarios = usuarioService.obtenerTodosUsuarios();
-        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+        return ResponseEntity.ok(usuarios);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioEntity> obtenerUsuarioPorId(@PathVariable String id) {
         Optional<UsuarioEntity> usuario = usuarioService.obtenerUsuarioPorId(id);
-        return usuario.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return usuario.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDto> actualizarUsuario(@PathVariable String id, @RequestBody UsuarioRequestDto usuarioRequestDto) {
-        UsuarioResponseDto usuarioActualizado = usuarioService.actualizarUsuario(usuarioRequestDto, id);
-        if (usuarioActualizado != null) {
-            return new ResponseEntity<>(usuarioActualizado, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<UsuarioResponseDto> actualizarUsuario(
+            @PathVariable String id,
+            @RequestBody UsuarioRequestDto usuarioRequestDto) {
+        try {
+            UsuarioResponseDto usuarioActualizado = usuarioService.actualizarUsuario(usuarioRequestDto, id);
+            return ResponseEntity.ok(usuarioActualizado);
+        } catch (Exception ex) {
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
     public ResponseEntity<UsuarioEntity> crearUsuario(@RequestBody UsuarioEntity usuario) {
         UsuarioEntity nuevoUsuario = usuarioService.guardarUsuario(usuario);
-        return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarUsuario(@PathVariable String id) {
+    public ResponseEntity<Void> eliminarUsuario(@PathVariable String id) throws Exception {
         usuarioService.eliminarUsuarioPorId(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.MissingFormatArgumentException;
 import java.util.Optional;
 
 @Service
@@ -24,21 +25,17 @@ public class UsuarioService {
     }
 
     public List<UsuarioResponseDto> obtenerTodosUsuarios() {
-        return usuarioMapper.usuarioListToUsuarioResponseDtoList(usuarioRepository.findAll());
+        List<UsuarioEntity> usuarios = usuarioRepository.findAll();
+        return usuarioMapper.usuarioListToUsuarioResponseDtoList(usuarios);
     }
 
-    public Optional<UsuarioEntity> obtenerUsuarioPorId(String id) {
-        return usuarioRepository.findById(id);
-    }
-
-    public UsuarioResponseDto actualizarUsuario(UsuarioRequestDto usuarioRequestDto, String id) {
-        Optional<UsuarioEntity> usuarioExists = usuarioRepository.findById(id);
-        if (usuarioExists.isPresent()){
-            usuarioExists.get().setNombre(usuarioRequestDto.getNombreUsuario());
-            usuarioExists.get().setEmail(usuarioRequestDto.getCorreoElectronico());
-        }
-        UsuarioResponseDto usuarioDto =  usuarioMapper.toUsuarioResponseDto(usuarioRepository.save(usuarioExists.get()));
-        return usuarioDto;
+    public UsuarioResponseDto actualizarUsuario(UsuarioRequestDto usuarioRequestDto, String id) throws Exception {
+        UsuarioEntity usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new Exception("Usuario no encontrado con ID: " + id));
+        usuario.setNombre(usuarioRequestDto.getNombreUsuario());
+        usuario.setEmail(usuarioRequestDto.getCorreoElectronico());
+        UsuarioEntity usuarioActualizado = usuarioRepository.save(usuario);
+        return usuarioMapper.toUsuarioResponseDto(usuarioActualizado);
     }
 
     public UsuarioEntity guardarUsuario(UsuarioEntity usuario) {
@@ -50,8 +47,13 @@ public class UsuarioService {
     }
 
     public void eliminarUsuarioPorId(String id) {
+        usuarioRepository.findById(id);
         usuarioRepository.deleteById(id);
     }
 
-    // Agrega métodos adicionales según sea necesario
+    public Optional<UsuarioEntity> obtenerUsuarioPorId(String id) {
+        return Optional.ofNullable(usuarioRepository.findById(id)
+                .orElseThrow(() -> new MissingFormatArgumentException("Usuario no encontrado con ID: " + id)));
+    }
+
 }
