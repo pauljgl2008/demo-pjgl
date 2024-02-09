@@ -12,23 +12,30 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     /**
-    private static final String[] NO_AUTH_LIST = {
-            "/api-docs",
-            "/configuracion/v1",
-            "/swagger-resources",
-            "/configuration/security",
-            "/login"
-    };*/
+     * private static final String[] NO_AUTH_LIST = {
+     * "/api-docs",
+     * "/configuracion/v1",
+     * "/swagger-resources",
+     * "/configuration/security",
+     * "/login"
+     * };
+     */
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         /**
          return http.csrf(csrf -> csrf.disable()).build();
          return http.build();
-        */
-        return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth->auth
-                .anyRequest().permitAll()).build();
+         */
+        /**
+         return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth->auth
+         .anyRequest().permitAll()).build();
+         */
 
+        return http
+                .authorizeHttpRequests(auth  -> auth
+                .anyRequest().permitAll())
+                .csrf(AbstractHttpConfigurer::disable).build();
         /**
          return http.csrf(csrf -> csrf.disable())
          .authorizeHttpRequests(auth -> auth
@@ -52,8 +59,7 @@ public class SecurityConfiguration {
          */
     }
     /**
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+     @Bean CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cc = new CorsConfiguration();
 
         cc.setAllowedHeaders(Arrays.asList("Origin,Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers", "Authorization"));
@@ -66,7 +72,7 @@ public class SecurityConfiguration {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", cc);
         return source;
-    }*/
+     }*/
 
 
 }
