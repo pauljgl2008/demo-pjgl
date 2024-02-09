@@ -1,8 +1,8 @@
 package com.example.demopjgl.mappers;
 
-import com.example.demopjgl.dtos.requests.UsuarioRequestDto;
-import com.example.demopjgl.dtos.responses.UsuarioResponseDto;
-import com.example.demopjgl.entities.UsuarioEntity;
+import com.example.demopjgl.dtos.requests.UserRequestDto;
+import com.example.demopjgl.dtos.responses.UserResponseDto;
+import com.example.demopjgl.entities.UserEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,26 +13,26 @@ import java.util.List;
 
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface UsuarioMapper {
+public interface UserMapper {
 
-    UsuarioMapper INSTANCE = Mappers.getMapper( UsuarioMapper.class );
-
-    @Mapping(source = "nombre", target = "nombreUsuario")
-    @Mapping(source = "celular", target = "numeroCelular")
-    @Mapping(source = "email", target = "correoElectronico")
-    UsuarioResponseDto toUsuarioResponseDto(UsuarioEntity usuarioEntity);
+    UserMapper INSTANCE = Mappers.getMapper( UserMapper.class );
 
     @Mapping(source = "nombre", target = "nombreUsuario")
     @Mapping(source = "celular", target = "numeroCelular")
     @Mapping(source = "email", target = "correoElectronico")
-    UsuarioRequestDto toUsuarioRequestDto(UsuarioEntity usuarioEntity);
+    UserResponseDto toUserResponseDto(UserEntity userEntity);
 
-    List<UsuarioResponseDto> usuarioListToUsuarioResponseDtoList(List<UsuarioEntity> source);
+    @Mapping(source = "nombre", target = "nombreUsuario")
+    @Mapping(source = "celular", target = "numeroCelular")
+    @Mapping(source = "email", target = "correoElectronico")
+    UserRequestDto toUserRequestDto(UserEntity userEntity);
+
+    List<UserResponseDto> userListToUserResponseDtoList(List<UserEntity> source);
 
     @InheritInverseConfiguration
-    UsuarioEntity fromUsuarioResponseDto(UsuarioResponseDto source);
+    UserEntity fromUserResponseDto(UserResponseDto source);
 
     @InheritInverseConfiguration
-    UsuarioEntity fromUsuarioRequestDto(UsuarioRequestDto source);
+    UserEntity fromUserRequestDto(UserRequestDto source);
 
 }
