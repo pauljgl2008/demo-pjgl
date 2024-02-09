@@ -26,7 +26,8 @@ public class SecurityConfiguration {
          return http.csrf(csrf -> csrf.disable()).build();
          return http.build();
         */
-        return http.csrf(AbstractHttpConfigurer::disable).build();
+        return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth->auth
+                .anyRequest().permitAll()).build();
 
         /**
          return http.csrf(csrf -> csrf.disable())
