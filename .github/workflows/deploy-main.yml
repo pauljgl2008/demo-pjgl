@@ -87,7 +87,7 @@ jobs:
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: demo-pjgl-latest-service
-          cluster: demo-cluster-pjgl-v6
+          cluster: demo-cluster-pjgl-v7
           wait-for-service-stability: false
 
       - name: Stop previous task

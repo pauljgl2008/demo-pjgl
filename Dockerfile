@@ -1,5 +1,5 @@
 # Usa una imagen base de OpenJDK para Java 17
-FROM openjdk:22-ea-34
+FROM openjdk:22-ea-34 AS build
 
 # Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
