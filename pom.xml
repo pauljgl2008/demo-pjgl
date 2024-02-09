@@ -17,9 +17,11 @@
 		<java.version>21</java.version>
 		<org.mapstruct.version>1.6.0.Beta1</org.mapstruct.version>
 		<lombok.version>1.18.30</lombok.version>
+		<gson.version>2.10.1</gson.version>
 		<openapi.version>2.2.0</openapi.version>
 		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
 		<maven.surefire.plugin.version>2.19.1</maven.surefire.plugin.version>
+		<swagger.models.jakarta.version>2.2.7</swagger.models.jakarta.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -48,7 +50,7 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.10.1</version>
+			<version>${gson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -77,7 +79,7 @@
 		<dependency>
 			<groupId>io.swagger.core.v3</groupId>
 			<artifactId>swagger-models-jakarta</artifactId>
-			<version>2.2.7</version>
+			<version>${swagger.models.jakarta.version}</version>
 		</dependency>
 	</dependencies>
 
