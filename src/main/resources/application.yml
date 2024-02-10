@@ -1,0 +1,28 @@
+logging:
+  file:
+    name: logs/demo-pjgl.log
+  level:
+    root: DEBUG
+
+# Especifica la ruta de la documentación OpenAPI
+springdoc:
+  api-docs:
+    path: /api-docs
+  # Especifica la ruta de Swagger UI
+  swagger-ui:
+    path: /swagger-ui.html
+    # Habilita o deshabilita Swagger UI
+    enabled: true
+
+spring:
+  security:
+    user:
+      name: admin
+      password: qwerty
+      roles: ADMIN
+  application:
+    name: users
+  profiles:
+    active: local
+  config:
+    import: optional:configserver:http://localhost:8085

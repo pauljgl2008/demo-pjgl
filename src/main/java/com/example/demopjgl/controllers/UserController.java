@@ -1,9 +1,15 @@
 package com.example.demopjgl.controllers;
 
+
+import com.example.demopjgl.config.UsersServiceConfiguration;
 import com.example.demopjgl.dtos.requests.UserRequestDto;
 import com.example.demopjgl.dtos.responses.UserResponseDto;
 import com.example.demopjgl.entities.UserEntity;
+import com.example.demopjgl.models.UsersProperties;
 import com.example.demopjgl.services.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,6 +36,9 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
+    private UsersServiceConfiguration usersConfig;
+
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -50,6 +59,14 @@ public class UserController {
         Optional<UserEntity> user = userService.getUserById(id);
         return user.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/local")
+    public ResponseEntity<String> getPropertiesLocal() throws JsonProcessingException {
+        ObjectWriter owj = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        UsersProperties usersProperties = new UsersProperties(usersConfig.getUrl());
+        String jsonString = owj.writeValueAsString(usersProperties);
+        return ResponseEntity.ok(jsonString);
     }
 
     @PutMapping("/{id}")
