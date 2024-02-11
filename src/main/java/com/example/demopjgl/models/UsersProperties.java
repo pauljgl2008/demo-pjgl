@@ -7,6 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class UsersProperties {
 
-    private String springDataMongoUrl;
+    private String springDataMongodbUri;
 
 }

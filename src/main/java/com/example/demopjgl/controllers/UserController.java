@@ -1,7 +1,7 @@
 package com.example.demopjgl.controllers;
 
 
-import com.example.demopjgl.config.UsersServiceConfiguration;
+import com.example.demopjgl.config.UsersConfiguration;
 import com.example.demopjgl.dtos.requests.UserRequestDto;
 import com.example.demopjgl.dtos.responses.UserResponseDto;
 import com.example.demopjgl.entities.UserEntity;
@@ -17,7 +17,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -35,12 +34,11 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired
-    private UsersServiceConfiguration usersConfig;
+    private UsersConfiguration usersConfig;
 
-    @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UsersConfiguration usersConfig) {
         this.userService = userService;
+        this.usersConfig = usersConfig;
     }
 
     @Operation(description = "Devuelve todos los users", summary = "Return 204 if no data found")
@@ -64,7 +62,7 @@ public class UserController {
     @GetMapping("/local")
     public ResponseEntity<String> getPropertiesLocal() throws JsonProcessingException {
         ObjectWriter owj = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        UsersProperties usersProperties = new UsersProperties(usersConfig.getUrl());
+        UsersProperties usersProperties = new UsersProperties(usersConfig.getSpringDataMongodbUri());
         String jsonString = owj.writeValueAsString(usersProperties);
         return ResponseEntity.ok(jsonString);
     }

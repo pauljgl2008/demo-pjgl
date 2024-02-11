@@ -1,5 +1,6 @@
 package com.example.demopjgl.dtos.responses;
 
+import com.example.demopjgl.models.ErrorModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class ErrorResponseDto {
+public class ErrorResponseDto {
 
     private int status;
 

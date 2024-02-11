@@ -1,6 +1,6 @@
-package com.example.demopjgl;
+package com.example.demopjgl.dtos;
 
-import com.example.demopjgl.dtos.responses.ErrorModel;
+import com.example.demopjgl.models.ErrorModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

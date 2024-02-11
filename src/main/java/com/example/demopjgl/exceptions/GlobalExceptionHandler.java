@@ -1,5 +1,7 @@
-package com.example.demopjgl.dtos.responses;
+package com.example.demopjgl.exceptions;
 
+import com.example.demopjgl.dtos.responses.ErrorResponseDto;
+import com.example.demopjgl.models.ErrorModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

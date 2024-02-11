@@ -1,4 +1,4 @@
-package com.example.demopjgl.dtos.responses;
+package com.example.demopjgl.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -4,7 +4,7 @@ logging:
   level:
     root: DEBUG
 
-# Especifica la ruta de la documentación OpenAPI
+# Especifica la ruta de la documentaciï¿½n OpenAPI
 springdoc:
   api-docs:
     path: /api-docs
@@ -15,14 +15,14 @@ springdoc:
     enabled: true
 
 spring:
-  security:
-    user:
-      name: admin
-      password: qwerty
-      roles: ADMIN
   application:
     name: users
   profiles:
     active: local
   config:
     import: optional:configserver:http://localhost:8085
+  security:
+    user:
+      name: admin
+      password: qwerty
+      roles: ADMIN
