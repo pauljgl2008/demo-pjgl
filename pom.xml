@@ -21,7 +21,7 @@
 		<openapi.version>2.2.0</openapi.version>
 		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
 		<maven.surefire.plugin.version>2.19.1</maven.surefire.plugin.version>
-		<swagger.models.jakarta.version>2.2.7</swagger.models.jakarta.version>
+		<swagger.models.jakarta.version>2.2.20</swagger.models.jakarta.version>
 		<spring-cloud.version>2023.0.0</spring-cloud.version>
 	</properties>
 	<dependencies>
